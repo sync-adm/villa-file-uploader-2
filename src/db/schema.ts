@@ -85,3 +85,12 @@ export const verification = sqliteTable("verification", {
 /**
  * Below, feel free to delete/update/add tables as you see fit for your app.
  */
+export const demoData = sqliteTable("demo_data", {
+  id: integer("id").primaryKey(),
+  header: text("header").notNull(),
+  type: text("type").notNull(),
+  status: text("status").notNull(),
+  target: integer("target").notNull(),
+  limit: integer("limit").notNull(),
+  reviewer: text("reviewer").notNull(),
+});
