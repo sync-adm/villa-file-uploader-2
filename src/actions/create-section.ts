@@ -49,7 +49,7 @@ export const createSection = async (
 
   console.debug("Section created successfully");
 
-  revalidatePath("/dashboard", "page");
+  revalidatePath("/", "layout");
 
   return {};
 };

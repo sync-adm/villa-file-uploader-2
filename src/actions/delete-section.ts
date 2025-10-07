@@ -40,7 +40,7 @@ export const deleteSection = async (
 
   console.debug("Section deleted successfully");
 
-  revalidatePath("/dashboard", "page");
+  revalidatePath("/", "layout");
 
   return {};
 };
