@@ -12,7 +12,30 @@ Used deps:
 
 ## Getting Started
 
-### Running the development server
+### (0. Install pnpm)
+
+See [pnpm Installation Guide](https://pnpm.io/installation).
+
+
+### 1. Install all dependencies 
+
+```bash
+pnpm i
+```
+
+You do this whenever new dependencies should get installed
+
+### 2. Initialize the database
+
+```bash
+pnpm db:push
+```
+
+This command creates a (.gitignore'd) SQLite DB file in src/db/localdb.sqlite.
+
+*You also use this command later to push the changes to the schema into the database!*
+
+### 3. Running the development server
 
 ```bash
 pnpm dev
