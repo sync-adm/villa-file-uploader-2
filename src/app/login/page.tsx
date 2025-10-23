@@ -29,13 +29,13 @@ export default function LoginPage() {
               <form action={formAction} className="p-6 md:p-8">
                 <FieldGroup>
                   <div className="flex flex-col items-center gap-2 text-center">
-                    <h1 className="text-2xl font-bold">Welcome back</h1>
+                    <h1 className="text-2xl font-bold">Bem-vindo de volta</h1>
                     <p className="text-muted-foreground text-balance">
-                      Login to your account
+                      Faça login na sua conta
                     </p>
                   </div>
                   <Field>
-                    <FieldLabel htmlFor="email">Email</FieldLabel>
+                    <FieldLabel htmlFor="email">E-mail</FieldLabel>
                     <Input
                       id="email"
                       name="email"
@@ -46,7 +46,7 @@ export default function LoginPage() {
                   </Field>
                   <Field>
                     <div className="flex items-center">
-                      <FieldLabel htmlFor="password">Password</FieldLabel>
+                      <FieldLabel htmlFor="password">Senha</FieldLabel>
                     </div>
                     <Input
                       id="password"
@@ -70,28 +70,28 @@ export default function LoginPage() {
                       {pending && (
                         <Loader2Icon className="size-4 animate-spin" />
                       )}
-                      Login
+                      Entrar
                     </Button>
                   </Field>
 
                   <FieldDescription className="text-center">
-                    Don&apos;t have an account? <a href="/signup">Sign up</a>
+                    Ainda não tem uma conta? <a href="/signup">Cadastre-se</a>
                   </FieldDescription>
                 </FieldGroup>
               </form>
               <div className="bg-muted relative hidden md:block">
                 <Image
                   src={DecorationPic}
-                  alt="Decoration image"
+                  alt="Imagem decorativa"
                   className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
                 />
               </div>
             </CardContent>
           </Card>
           <FieldDescription className="px-6 text-center">
-            By clicking continue, you agree to our{" "}
-            <Link href="/terms">Terms of Service</Link> and{" "}
-            <Link href="/privacy">Privacy Policy</Link>.
+            Ao clicar em continuar, você concorda com nossos{" "}
+            <Link href="/terms">Termos de Serviço</Link> e{" "}
+            <Link href="/privacy">Política de Privacidade</Link>.
           </FieldDescription>
         </div>
       </div>
