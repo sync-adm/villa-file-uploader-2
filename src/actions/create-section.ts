@@ -21,7 +21,7 @@ export const createSection = async (
   _prevState: { error?: string },
   formData: FormData,
 ): Promise<{ error?: string }> => {
-  console.debug("Calling create section server action!");
+  console.debug("Calling creat section server action!");
 
   const rawData = {
     header: formData.get("header"),
