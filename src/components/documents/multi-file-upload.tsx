@@ -33,7 +33,7 @@ export function MultiFileUpload({
       const newFiles = [...files, ...validFiles].slice(0, MAX_FILES);
       onFilesChange(newFiles);
     },
-    [files, onFilesChange],
+    [files, onFilesChange]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -42,7 +42,9 @@ export function MultiFileUpload({
     accept: {
       "application/pdf": [".pdf"],
       "image/*": [".jpg", ".jpeg", ".png", ".webp", ".heic"],
-      "application/*": [".doc", ".docx"],
+      "application/*": [".doc", ".docx", ".xls", ".xlsx"],
+      "text/xml": [".xml"],
+      "application/xml": [".xml"],
     },
   });
 
@@ -71,7 +73,7 @@ export function MultiFileUpload({
             isDragActive
               ? "border-blue-500 bg-blue-50"
               : "border-slate-300 hover:border-slate-400 bg-slate-50",
-            disabled && "opacity-50 cursor-not-allowed",
+            disabled && "opacity-50 cursor-not-allowed"
           )}
         >
           <input {...getInputProps()} />
@@ -86,7 +88,7 @@ export function MultiFileUpload({
                   : "Arraste arquivos ou clique para selecionar"}
               </p>
               <p className="text-sm text-slate-500 mt-1">
-                PDF, JPG, PNG, DOC até 10MB cada
+                PDF, JPG, PNG, DOC, XLS, XML até 10MB cada
               </p>
             </div>
           </div>

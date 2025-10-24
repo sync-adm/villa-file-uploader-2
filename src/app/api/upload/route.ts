@@ -82,21 +82,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log("Iniciando upload de documentos:", {
-      plate,
-      totalFiles: filesToUpload.length,
-      files: filesToUpload.map((f) => ({
-        name: f.file.name,
-        path: f.path,
-      })),
-    });
-
     const results = await uploadMultipleFilesToFilestash(
       filesToUpload,
       config,
-      (completed, total) => {
-        console.log(`Upload progress: ${completed}/${total}`);
-      }
+      (completed, total) => {}
     );
 
     const errors = results
