@@ -74,9 +74,9 @@ export default function LoginPage() {
                     </Button>
                   </Field>
 
-                  <FieldDescription className="text-center">
+                  {/* <FieldDescription className="text-center">
                     Ainda não tem uma conta? <a href="/signup">Cadastre-se</a>
-                  </FieldDescription>
+                  </FieldDescription> */}
                 </FieldGroup>
               </form>
               <div className="bg-muted relative hidden md:block">
