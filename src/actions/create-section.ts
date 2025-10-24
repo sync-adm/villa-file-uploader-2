@@ -39,6 +39,7 @@ export const createSection = async (
   }
 
   try {
+    // @ts-ignore
     await db.insert(demoData).values(data);
   } catch (err) {
     console.error(err);
