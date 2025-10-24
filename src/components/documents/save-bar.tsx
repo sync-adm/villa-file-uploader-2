@@ -9,6 +9,7 @@ type SaveBarProps = {
   onBack: () => void;
   onNext: () => void;
   isLoading: boolean;
+  canProceed?: boolean;
 };
 
 export function SaveBar({
@@ -17,6 +18,7 @@ export function SaveBar({
   onBack,
   onNext,
   isLoading,
+  canProceed = true,
 }: SaveBarProps) {
   const isLastFile = currentIndex === totalFiles - 1;
 

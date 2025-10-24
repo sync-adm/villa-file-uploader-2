@@ -2,41 +2,81 @@
 
 /**
  * Gera um nome de arquivo formatado seguindo o padrão:
- * YEARMMDD_USERFILENAME_USERNAME.EXTENSAO
+ * DDMMYYYY_USERFILENAME_USERNAME.EXTENSAO
  */
 export function formatFileName(
   originalName: string,
   userName: string,
   customName?: string,
 ): string {
-  // Obter data atual no formato YYYYMMDD
   const now = new Date();
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, "0");
   const day = String(now.getDate()).padStart(2, "0");
-  const datePrefix = `${year}${month}${day}`;
+  const datePrefix = `${day}-${month}-${year}`;
 
-  // Extrair extensão do arquivo original
   const lastDotIndex = originalName.lastIndexOf(".");
   const extension = lastDotIndex !== -1 ? originalName.slice(lastDotIndex) : "";
 
-  // Usar nome customizado se fornecido, senão usar o nome original sem extensão
   let fileName = customName || originalName.slice(0, lastDotIndex);
 
-  // Limpar nome do arquivo (remover caracteres especiais e espaços)
   fileName = fileName
-    .replace(/[^a-zA-Z0-9\s\-_]/g, "") // Remove caracteres especiais
-    .replace(/\s+/g, "_") // Substitui espaços por underscore
-    .toUpperCase(); // Converter para maiúsculo
-
-  // Limpar nome do usuário
-  const cleanUserName = userName
     .replace(/[^a-zA-Z0-9\s\-_]/g, "")
     .replace(/\s+/g, "_")
     .toUpperCase();
 
-  // Montar nome final
-  return `${datePrefix}_${fileName}_${cleanUserName}${extension}`;
+  const cleanUserName = userName.split(" ")[0]
+    .replace(/[^a-zA-Z0-9\s\-_]/g, "")
+    .replace(/\s+/g, "_")
+    .toUpperCase();
+
+  return `${datePrefix}-${cleanUserName}-${fileName}${extension}`;
+}
+
+/**
+ * Processa múltiplos arquivos e resolve duplicatas adicionando numeração
+ */
+export function formatFileNamesWithDuplicateHandling(
+  documents: Array<{
+    originalName: string;
+    customName?: string;
+    category: string;
+  }>,
+  userName: string,
+): Array<{ formattedName: string; baseName: string }> {
+  const nameCount = new Map<string, number>();
+  const results: Array<{ formattedName: string; baseName: string }> = [];
+
+  for (const doc of documents) {
+    // Gerar nome base sem numeração
+    const baseName = formatFileName(doc.originalName, userName, doc.customName);
+    
+    // Extrair nome sem extensão e extensão
+    const lastDotIndex = baseName.lastIndexOf(".");
+    const nameWithoutExt = lastDotIndex !== -1 ? baseName.slice(0, lastDotIndex) : baseName;
+    const extension = lastDotIndex !== -1 ? baseName.slice(lastDotIndex) : "";
+    
+    // Criar chave única incluindo categoria para evitar conflitos entre categorias diferentes
+    const uniqueKey = `${doc.category}:${nameWithoutExt}${extension}`;
+    
+    let finalName = baseName;
+    
+    // Se já existe este nome na mesma categoria, adicionar numeração
+    if (nameCount.has(uniqueKey)) {
+      const count = nameCount.get(uniqueKey)!;
+      nameCount.set(uniqueKey, count + 1);
+      finalName = `${nameWithoutExt}_${count}${extension}`;
+    } else {
+      nameCount.set(uniqueKey, 1);
+    }
+    
+    results.push({
+      formattedName: finalName,
+      baseName: baseName,
+    });
+  }
+
+  return results;
 }
 
 /**

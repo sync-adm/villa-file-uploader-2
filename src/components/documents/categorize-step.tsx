@@ -5,6 +5,7 @@ import { DocumentMetaForm } from "@/components/documents/document-meta-form";
 import { CategorizeNavigator } from "@/components/documents/categorize-navigator";
 import type { DocumentFile } from "@/lib/api";
 import { SaveBar } from "./save-bar";
+import { toast } from "sonner";
 
 type CategorizeStepProps = {
   files: DocumentFile[];
@@ -27,6 +28,24 @@ export function CategorizeStep({
 }: CategorizeStepProps) {
   const currentFile = files[currentIndex];
 
+  const hasCategory = currentFile.categories.length > 0;
+
+  const handleNext = () => {
+    if (!hasCategory) {
+      toast.error("Categoria obrigatória", {
+        description:
+          "Selecione uma categoria para este documento antes de continuar",
+        style: {
+          background: "#ef4444",
+          color: "white",
+          border: "1px solid #dc2626",
+        },
+      });
+      return;
+    }
+    onNext();
+  };
+
   return (
     <div className="p-8 pt-0">
       <CategorizeNavigator
@@ -48,8 +67,9 @@ export function CategorizeStep({
         currentIndex={currentIndex}
         totalFiles={files.length}
         onBack={onBack}
-        onNext={onNext}
+        onNext={handleNext}
         isLoading={isLoading}
+        canProceed={hasCategory}
       />
     </div>
   );

@@ -49,7 +49,6 @@ export default function UploadVehicleDocuments() {
     if (currentIndex < files.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
-      // Save all documents
       setIsLoading(true);
       try {
         const result = await saveDocuments(plate, files, userName);
@@ -60,15 +59,18 @@ export default function UploadVehicleDocuments() {
           ).length;
           toast.success("Documentos salvos com sucesso!", {
             description: `${successCount} documento(s) vinculado(s) à placa ${plate}`,
+            style: {
+              background: "#10b981",
+              color: "white",
+              border: "1px solid #059669",
+            },
           });
 
-          // Reset wizard
           setStep(1);
           setPlate("");
           setFiles([]);
           setCurrentIndex(0);
         } else if (result.errors) {
-          // Alguns uploads falharam
           toast.error("Alguns documentos não puderam ser salvos", {
             description:
               result.errors[0] +

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { formatFileName, generateFilePath } from "@/lib/file-utils";
+import { formatFileNamesWithDuplicateHandling, generateFilePath } from "@/lib/file-utils";
 import {
   uploadMultipleFilesToFilestash,
   getFilestashConfig,
@@ -21,9 +21,13 @@ export async function POST(request: NextRequest) {
 
     const config = getFilestashConfig();
 
-    console.log("Configuração do Filestash obtida com sucesso", config);
-
-    const filesToUpload: Array<{ file: File; path: string }> = [];
+    // Primeiro, coletar todos os arquivos
+    const documentData: Array<{
+      file: File;
+      originalName: string;
+      customName?: string;
+      category: string;
+    }> = [];
     
     let fileIndex = 0;
     while (formData.get(`file_${fileIndex}`)) {
@@ -40,18 +44,36 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      const formattedName = formatFileName(file.name, userName, fileName);
-
-      const category = categories[0];
-      const fullPath = generateFilePath(plate, category, formattedName);
-
-      filesToUpload.push({
+      documentData.push({
         file,
-        path: fullPath,
+        originalName: file.name,
+        customName: fileName,
+        category: categories[0], // usar primeira categoria
       });
       
       fileIndex++;
     }
+
+    // Processar nomes e resolver duplicatas
+    const formattedNames = formatFileNamesWithDuplicateHandling(
+      documentData.map(d => ({
+        originalName: d.originalName,
+        customName: d.customName,
+        category: d.category,
+      })),
+      userName
+    );
+
+    // Preparar arquivos para upload
+    const filesToUpload: Array<{ file: File; path: string }> = documentData.map((doc, index) => {
+      const formattedName = formattedNames[index].formattedName;
+      const fullPath = generateFilePath(plate, doc.category, formattedName);
+
+      return {
+        file: doc.file,
+        path: fullPath,
+      };
+    });
 
     if (filesToUpload.length === 0) {
       return NextResponse.json(

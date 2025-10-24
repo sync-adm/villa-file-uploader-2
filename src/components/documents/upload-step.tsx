@@ -10,14 +10,15 @@ import { PlateInput } from "@/components/documents/plate-input";
 import { MultiFileUpload } from "@/components/documents/multi-file-upload";
 import { Button } from "@/components/ui/button";
 
-const uploadSchema = z.object({
+export const plateSchema = z.object({
   plate: z
     .string()
-    .min(1, "Placa é obrigatória")
-    .regex(/^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/i, "Formato de placa inválido"),
+    .min(7, "A placa deve ter 7 caracteres")
+    .max(7, "A placa deve ter 7 caracteres")
+    .regex(/^(?:[A-Z]{3}-?\d{4}|[A-Z]{3}\d[A-Z]\d{2})$/, "Placa inválida"),
 });
 
-type UploadFormData = z.infer<typeof uploadSchema>;
+type UploadFormData = z.infer<typeof plateSchema>;
 
 type UploadStepProps = {
   initialPlate?: string;
@@ -37,7 +38,7 @@ export function UploadStep({
     handleSubmit,
     formState: { errors },
   } = useForm<UploadFormData>({
-    resolver: zodResolver(uploadSchema),
+    resolver: zodResolver(plateSchema),
     defaultValues: {
       plate: initialPlate,
     },

@@ -15,10 +15,6 @@ export function DocumentPreview({ file }: DocumentPreviewProps) {
 
   return (
     <div className="border-2 border-slate-200 rounded-lg p-6 h-[600px] flex flex-col">
-      <h3 className="text-lg font-semibold text-slate-900 mb-4">
-        Preview do documento
-      </h3>
-
       <div className="flex-1 flex items-center justify-center bg-slate-50 rounded-lg overflow-hidden">
         {isPDF ? (
           <embed
