@@ -85,7 +85,7 @@ export function UploadStep({
           <div className="flex justify-end">
             <Button
               type="submit"
-              className="w-45"
+              className="w-45 bg-blue-600 hover:bg-blue-700"
               size="lg"
               disabled={files.length === 0}
             >

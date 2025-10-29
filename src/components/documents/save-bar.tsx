@@ -28,7 +28,11 @@ export function SaveBar({
         Voltar
       </Button>
 
-      <Button onClick={onNext} disabled={isLoading}>
+      <Button
+        onClick={onNext}
+        disabled={isLoading}
+        className="bg-blue-600 hover:bg-blue-700"
+      >
         {isLoading ? (
           <>
             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
