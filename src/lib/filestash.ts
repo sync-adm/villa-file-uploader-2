@@ -95,13 +95,13 @@ export async function uploadMultipleFilesToFilestash(
  * Obtém a configuração do Filestash das variáveis de ambiente
  */
 export function getFilestashConfig(): FilestashConfig {
-  const instance = process.env.FILESTASH_INSTANCE;
+  const instance = process.env.FILESTASH_USER_INSTANCE;
   const share = process.env.FILESTASH_SHARE;
   const key = process.env.FILESTASH_KEY;
 
   if (!instance || !share || !key) {
     throw new Error(
-      "Configuração do Filestash não encontrada. Verifique as variáveis de ambiente FILESTASH_INSTANCE, FILESTASH_SHARE e FILESTASH_KEY.",
+      "Configuração do Filestash não encontrada. Verifique as variáveis de ambiente FILESTASH_USER_INSTANCE, FILESTASH_SHARE e FILESTASH_KEY.",
     );
   }
 
