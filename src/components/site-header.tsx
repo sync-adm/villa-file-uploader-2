@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import Link from "next/link";
 
 export function SiteHeader() {
   return (
@@ -14,14 +15,24 @@ export function SiteHeader() {
         <h1 className="text-base font-medium">Villa - Documentos de Gestão</h1>
         <div className="ml-auto flex items-center gap-2">
           <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
-            <a
+            <Link
+              href="https://admin-drive.villaveiculos.com.br/login"
+              rel="noopener noreferrer"
+              target="_blank"
+              className="dark:text-foreground"
+            >
+              Painel Avançado
+            </Link>
+          </Button>
+          <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
+            <Link
               href="https://sync.com.br"
               rel="noopener noreferrer"
               target="_blank"
               className="dark:text-foreground"
             >
               Sync
-            </a>
+            </Link>
           </Button>
         </div>
       </div>
